@@ -53,6 +53,12 @@ public class ChessMatch {
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
     }
 
+    private void validateTargetPosition(Position source, Position target){
+        if (board.piece(source).possibleMove(target)) {
+            throw new ChessException("There is a piece in the target position");
+        }
+    }
+
     private void initialSetup(){
         placeNewPiece('C', 1, new Rook(board, Color.WHITE));
         placeNewPiece('C', 2, new Rook(board, Color.WHITE));
