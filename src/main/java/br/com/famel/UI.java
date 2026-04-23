@@ -1,5 +1,6 @@
 package br.com.famel;
 
+import br.com.famel.chess.ChessMatch;
 import br.com.famel.chess.ChessPiece;
 import br.com.famel.chess.ChessPosition;
 import br.com.famel.chess.Color;
@@ -43,6 +44,13 @@ public class UI {
         catch (RuntimeException e) {
             throw new InputMismatchException("Invalid position, position must be between A1 and H8");
         }
+    }
+
+    public static void printMatch(ChessMatch chessMatch){
+        printBoard(chessMatch.getPieces());
+        System.out.println();
+        System.out.println("Turn: " + chessMatch.getTurn());
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
     }
 
     public static void printBoard(ChessPiece[][] pieces){
