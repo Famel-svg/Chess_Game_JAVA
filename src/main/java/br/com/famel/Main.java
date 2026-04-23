@@ -1,13 +1,10 @@
 package br.com.famel;
 
-import br.com.famel.boardgame.Board;
-import br.com.famel.boardgame.Position;
 import br.com.famel.chess.ChessException;
 import br.com.famel.chess.ChessMatch;
 import br.com.famel.chess.ChessPiece;
 import br.com.famel.chess.ChessPosition;
 import java.util.Scanner;
-import static java.lang.IO.println;
 
 public class Main {
     public static void main(String[] args) {
