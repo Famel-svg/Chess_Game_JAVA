@@ -4,6 +4,7 @@ import br.com.famel.boardgame.Board;
 import br.com.famel.boardgame.Piece;
 import br.com.famel.boardgame.Position;
 import br.com.famel.chess.pieces.King;
+import br.com.famel.chess.pieces.Pawn;
 import br.com.famel.chess.pieces.Rook;
 
 import java.util.ArrayList;
@@ -92,7 +93,8 @@ public class ChessMatch {
     }
 
     private Piece makeMove(Position source, Position target){
-        Piece p = board.removePiece(source);
+        ChessPiece p = (ChessPiece) board.removePiece(source);
+        p.increaseMoveCount();
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(p, target);
 
@@ -105,9 +107,9 @@ public class ChessMatch {
     }
 
     private void undoMove(Position source, Position target, Piece capturedPiece){
-        Piece p = board.removePiece(target);
+        ChessPiece p = (ChessPiece) board.removePiece(target);
         board.placePiece(p, source);
-
+        p.increaseMoveCount();
         if (capturedPiece != null){
             board.placePiece(capturedPiece, target);
             capturedPieces.remove(capturedPiece);
@@ -196,18 +198,30 @@ public class ChessMatch {
     }
 
     private void initialSetup(){
-        placeNewPiece('C', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('C', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('D', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('E', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('E', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('D', 1, new King(board, Color.WHITE));
+        placeNewPiece('A', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('E', 1, new King(board, Color.WHITE));
+        placeNewPiece('H', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('A', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('B', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('C', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('D', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('E', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('F', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('G', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('H', 2, new Pawn(board, Color.WHITE));
 
-        placeNewPiece('C', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('C', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('D', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('E', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('E', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('D', 8, new King(board, Color.BLACK));
+
+
+        placeNewPiece('A', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('E', 8, new King(board, Color.BLACK));
+        placeNewPiece('H', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('A', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('B', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('C', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('D', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('E', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('F', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('G', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('H', 7, new Pawn(board, Color.BLACK));
     }
 }
