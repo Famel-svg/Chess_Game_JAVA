@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class ChessMatchTest {
 
     @Test
-    void estadoInicialTem22PecasEVezDasBrancas() {
+    void estadoInicialTem32PecasEVezDasBrancas() {
         ChessMatch match = new ChessMatch();
         int pecas = 0;
         for (ChessPiece[] linha : match.getPieces()) {
@@ -18,8 +18,7 @@ class ChessMatchTest {
                 if (p != null) pecas++;
             }
         }
-        // setup atual: torres, reis e peões; cavalos, bispos e damas não são criados
-        assertEquals(22, pecas);
+        assertEquals(32, pecas);
         assertEquals(1, match.getTurn());
         assertEquals(Color.WHITE, match.getCurrentPlayer());
         assertFalse(match.getCheck());
