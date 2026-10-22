@@ -2,11 +2,9 @@ package br.com.famel;
 
 import br.com.famel.chess.ChessException;
 import br.com.famel.chess.ChessMatch;
-import br.com.famel.chess.ChessPiece;
 import br.com.famel.chess.ChessPosition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -14,34 +12,38 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         ChessMatch match = new ChessMatch();
-        List<ChessPiece> captured = new ArrayList<>();
 
         while (!match.getCheckMate()){
             try {
                 UI.clearScreen();
-                UI.printMatch(match, captured);
+                UI.printMatch(match);
                 System.out.println();
                 System.out.println("Source: ");
-                ChessPosition source = UI.readChessPosition(new Scanner(sc.nextLine().toUpperCase()));
+                ChessPosition source = UI.readChessPosition(sc);
 
                 boolean[][] possibleMoves = match.PossibleMove(source);
                 UI.clearScreen();
                 UI.printBoard(match.getPieces(), possibleMoves);
                 System.out.println();
                 System.out.println("Target: ");
-                ChessPosition target = UI.readChessPosition(new Scanner(sc.nextLine().toUpperCase()));
+                ChessPosition target = UI.readChessPosition(sc);
 
-                ChessPiece capturedPiece = match.performChessMove(source, target);
-                if (capturedPiece != null){
-                    captured.add(capturedPiece);
-                }
+                match.performChessMove(source, target);
             }
             catch (ChessException e){
                 System.out.println(e.getMessage());
+                System.out.println("Press Enter to continue...");
+                if (!sc.hasNextLine()) {
+                    return;
+                }
                 sc.nextLine();
+            }
+            catch (NoSuchElementException e){
+                // entrada encerrada (Ctrl+D ou fim do pipe)
+                return;
             }
         }
         UI.clearScreen();
-        UI.printMatch(match, captured);
+        UI.printMatch(match);
     }
 }

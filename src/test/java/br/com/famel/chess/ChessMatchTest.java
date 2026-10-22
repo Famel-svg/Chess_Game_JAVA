@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 class ChessMatchTest {
@@ -62,5 +64,17 @@ class ChessMatchTest {
         match.performChessMove(new ChessPosition('E', 2), new ChessPosition('E', 4));
         assertThrows(ChessException.class,
                 () -> match.performChessMove(new ChessPosition('D', 2), new ChessPosition('D', 4)));
+    }
+
+    @Test
+    void capturaFicaRegistradaNaPartida() {
+        ChessMatch match = new ChessMatch();
+        match.performChessMove(new ChessPosition('E', 2), new ChessPosition('E', 4));
+        match.performChessMove(new ChessPosition('D', 7), new ChessPosition('D', 5));
+        ChessPiece capturada = match.performChessMove(new ChessPosition('E', 4), new ChessPosition('D', 5));
+
+        assertEquals("P", capturada.toString());
+        assertEquals(Color.BLACK, capturada.getColor());
+        assertEquals(List.of(capturada), match.getCapturedPieces());
     }
 }

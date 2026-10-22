@@ -3,10 +3,10 @@ package br.com.famel;
 import br.com.famel.chess.ChessMatch;
 import br.com.famel.chess.ChessPiece;
 import br.com.famel.chess.ChessPosition;
+import br.com.famel.chess.ChessPositionParser;
 import br.com.famel.chess.Color;
 
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -38,32 +38,24 @@ public class UI {
     }
 
     public static ChessPosition readChessPosition(Scanner sc) {
-        try {
-            String s = sc.nextLine();
-            char column = s.charAt(0);
-            int row = Integer.parseInt(s.substring(1));
-            return new ChessPosition(column, row);
-        }
-        catch (RuntimeException e) {
-            throw new InputMismatchException("Invalid position, position must be between A1 and H8");
-        }
+        return ChessPositionParser.parse(sc.nextLine());
     }
 
-    public static void printMatch(ChessMatch chessMatch, List<ChessPiece> capturedPieces){
+    public static void printMatch(ChessMatch chessMatch){
         printBoard(chessMatch.getPieces());
         System.out.println();
-        printCapturedPiece(capturedPieces);
+        printCapturedPiece(chessMatch.getCapturedPieces());
         System.out.println();
         System.out.println("Turn: " + chessMatch.getTurn());
-        if (!chessMatch.getCheckMate()){
-            System.out.println("Check: " + chessMatch.getCheck());
+        if (chessMatch.getCheckMate()){
+            System.out.println(ANSI_RED + "CHECKMATE!" + ANSI_RESET);
+            System.out.println("Winner: " + chessMatch.getCurrentPlayer());
         }
         else {
             System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
-        }
-
-        if (chessMatch.getCheck()){
-            System.out.println(ANSI_RED + "Check on " + chessMatch.getCurrentPlayer() + "!" + ANSI_RESET);
+            if (chessMatch.getCheck()){
+                System.out.println(ANSI_RED + "Check on " + chessMatch.getCurrentPlayer() + "!" + ANSI_RESET);
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import br.com.famel.chess.pieces.Queen;
 import br.com.famel.chess.pieces.Rook;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,7 @@ public class ChessMatch {
     private boolean check;
     private boolean checkMate;
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
-    private List<Piece> capturedPieces = new ArrayList<>();
+    private List<ChessPiece> capturedPieces = new ArrayList<>();
 
     public ChessMatch() {
         board = new Board (8, 8);
@@ -53,6 +54,10 @@ public class ChessMatch {
 
     public boolean getCheckMate() {
         return checkMate;
+    }
+
+    public List<ChessPiece> getCapturedPieces() {
+        return Collections.unmodifiableList(capturedPieces);
     }
 
     public  ChessPiece[][] getPieces(){
@@ -115,7 +120,7 @@ public class ChessMatch {
         p.decreaseMoveCount();
         if (capturedPiece != null){
             board.placePiece(capturedPiece, target);
-            capturedPieces.remove(capturedPiece);
+            capturedPieces.remove((ChessPiece) capturedPiece);
             piecesOnTheBoard.add(capturedPiece);
         }
     }
